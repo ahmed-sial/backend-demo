@@ -1,0 +1,32 @@
+services:
+  postgres:
+    container_name: postgres-assignment
+    image: postgres
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: assignment_db
+    volumes:
+      - postgres:/var/lib/postgresql
+    ports:
+      - "5431:5432"
+    networks:
+      - assignment-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U username -d assignment_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  redis:
+    image: redis
+    container_name: redis-assignment
+    ports:
+      - "6379:6379"
+
+networks:
+  assignment-network:
+    driver: bridge
+volumes:
+  postgres:
+    driver: local
