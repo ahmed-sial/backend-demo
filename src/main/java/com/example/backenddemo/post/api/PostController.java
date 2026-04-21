@@ -47,12 +47,15 @@ public class PostController {
                 .body(savedComment);
     }
 
+    // As spring security is not implemented so we can't get authentication and check who liked the post so userId is fetched explicitly by request parameter.
     @PostMapping("/{postId}/likes")
     public ResponseEntity<PostResponseDto> likePost(
+            @RequestParam
+            UUID authorId,
             @PathVariable
             UUID postId
     ) {
-        var post = postService.likePost(postId);
+        var post = postService.likePost(authorId, postId);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(post);
