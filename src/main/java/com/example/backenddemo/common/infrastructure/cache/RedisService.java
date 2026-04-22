@@ -36,16 +36,14 @@ public class RedisService {
         updateByPoints(postId, HUMAN_COMMENT_POINTS);
     }
 
-    public boolean cooldownKeyExists(UUID botId, UUID humanId) {
-        return redisTemplate.hasKey(getRedisCooldownKey(botId, humanId));
-    }
-
-    public void addCooldownKey(UUID botId, UUID humanId) {
-        redisTemplate.opsForValue().set(
+    public boolean acquireCooldown(UUID botId, UUID humanId) {
+        Boolean absent = redisTemplate.opsForValue().setIfAbsent(
                 getRedisCooldownKey(botId, humanId),
                 1,
                 10,
-                TimeUnit.MINUTES);
+                TimeUnit.MINUTES
+        );
+        return Boolean.TRUE.equals(absent);
     }
 
     private void updateByPoints(UUID postId, int points) {
