@@ -1,0 +1,1134 @@
+{
+  "info": {
+    "name": "Backend Assignment",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1_Users",
+      "item": [
+        {
+          "name": "Create Premium User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "protocol": "",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"john_doe_premium\",\n  \"isPremium\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "if (pm.response.code === 201 && pm.response.body && pm.response.body.userId) {",
+                  "  console.log(\"Saving...\")",
+                  "  pm.environment.set(\"humanId\", pm.response.body.userId, { persist: true });",
+                  "  console.log(\"userId saved:\", pm.response.body.userId);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "protocol": "",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"john_doe\",\n  \"isPremium\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "if (pm.response.code === 201 && pm.response.body && pm.response.body.userId) {",
+                  "  console.log(\"Saving...\")",
+                  "  pm.environment.set(\"humanId\", pm.response.body.userId, { persist: true });",
+                  "  console.log(\"userId saved:\", pm.response.body.userId);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2_Bots",
+      "item": [
+        {
+          "name": "Create Bot",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/bots",
+              "protocol": "",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "bots"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Bot01\",\n  \"personaDescription\": \"Dummy persona description\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "if (pm.response.code === 201 && pm.response.body && pm.response.body.botId) {",
+                  "  console.log(\"Saving...\")",
+                  "  pm.environment.set(\"botId\", pm.response.body.botId, { persist: true });",
+                  "  console.log(\"botId saved:\", pm.response.body.botId);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Second Bot",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/bots",
+              "protocol": "",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "bots"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Bot02\",\n  \"personaDescription\": \"Dummy persona description\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "if (pm.response.code === 201 && pm.response.body && pm.response.body.botId) {",
+                  "  console.log(\"Saving...\")",
+                  "  pm.environment.set(\"botId\", pm.response.body.botId, { persist: true });",
+                  "  console.log(\"botId saved:\", pm.response.body.botId);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "3_Posts",
+      "item": [
+        {
+          "name": "Create Post (by Bot)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/posts",
+              "protocol": "",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authorId\": \"{{botId}}\",\n  \"content\": \"Post by bot\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "if (pm.response.code === 201 && pm.response.body && pm.response.body.postId) {",
+                  "  console.log(\"Saving...\")",
+                  "  pm.environment.set(\"botPostId\", pm.response.body.postId, { persist: true });",
+                  "  console.log(\"postId saved:\", pm.response.body.postId);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Post (by User)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/posts",
+              "protocol": "",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authorId\": \"{{humanId}}\",\n  \"content\": \"Post by user\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "if (pm.response.code === 201 && pm.response.body && pm.response.body.postId) {",
+                  "  console.log(\"Saving...\")",
+                  "  pm.environment.set(\"humanPostId\", pm.response.body.postId, { persist: true });",
+                  "  console.log(\"postId saved:\", pm.response.body.postId);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Like Post (by Bot)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/posts/{{botPostId}}/like?authorId={{botId}}",
+              "protocol": "",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts",
+                "{{botPostId}}",
+                "like?authorId={{botId}}"
+              ],
+              "query": [
+                {
+                  "key": "authorId",
+                  "value": "{{botId}}"
+                }
+              ],
+              "variable": []
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "var postId = pm.environment.get(\"botPostId\");",
+                  "var botId = pm.environment.get(\"botId\");",
+                  "if (!postId) console.warn(\"botPostId is not set. Run 'Create Post' first.\");",
+                  "if (!botId) console.warn(\"botId is not set. Run 'Create Bot' first.\");"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Like Post (by User)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/posts/{{humanPostId}}/like?authorId={{humanId}}",
+              "protocol": "",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts",
+                "{{humanPostId}}",
+                "like?authorId={{humanId}}"
+              ],
+              "query": [
+                {
+                  "key": "authorId",
+                  "value": "{{humanId}}"
+                }
+              ],
+              "variable": []
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "var postId = pm.environment.get(\"humanPostId\");",
+                  "var userId = pm.environment.get(\"humanId\");",
+                  "if (!postId) console.warn(\"humanPostId is not set. Run 'Create Post' first.\");",
+                  "if (!userId) console.warn(\"humanId is not set. Run 'Create User' first.\");"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "4_Comments",
+      "item": [
+        {
+          "name": "Add Nested Reply (depth 1)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/posts/{{botPostId}}/comments",
+              "protocol": "",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts",
+                "{{botPostId}}",
+                "comments"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authorId\": \"{{humanId}}\",\n  \"content\": \"Dummy comment\",\n  \"parentCommentId\": \"{{humanCommentId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "var postId = pm.environment.get(\"humanPostId\");",
+                  "var userId = pm.environment.get(\"humanId\");",
+                  "var commentId = pm.environment.get(\"commentId\");",
+                  "if (!postId) console.warn(\"humanPostId is not set. Run 'Create Post' first.\");",
+                  "if (!userId) console.warn(\"humanId is not set. Run 'Create User' first.\");",
+                  "if (!commentId) console.warn(\"humanCommentId is not set. Run a top-level comment request first.\");"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "if (pm.response.code === 201 && pm.response.body && pm.response.body.commentId) {",
+                  "  pm.environment.set(\"commentId\", pm.response.body.commentId, { persist: true });",
+                  "  console.log(\"commentId updated to nested reply:\", pm.response.body.commentId);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add Top-Level Comment (by Bot)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/posts/{{botPostId}}/comments",
+              "protocol": "",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts",
+                "{{botPostId}}",
+                "comments"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authorId\": \"{{botId}}\",\n  \"content\": \"Dummy comment\",\n  \"parentCommentId\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "var postId = pm.environment.get(\"humanPostId\");",
+                  "var botId = pm.environment.get(\"botId\");",
+                  "if (!postId) console.warn(\"postId is not set. Run 'Create Post' first.\");",
+                  "if (!botId) console.warn(\"botId is not set. Run 'Create Bot' first.\");"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "if (pm.response.code === 201 && pm.response.body && pm.response.body.commentId) {",
+                  "  pm.environment.set(\"botCommentId\", pm.response.body.commentId, { persist: true });",
+                  "  console.log(\"botCommentId saved:\", pm.response.body.commentId);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add Top-Level Comment (by Human)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/posts/{{humanPostId}}/comments",
+              "protocol": "",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts",
+                "{{humanPostId}}",
+                "comments"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authorId\": \"{{humanId}}\",\n  \"content\": \"Dummy comment\",\n  \"parentCommentId\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "var postId = pm.environment.get(\"humanPostId\");",
+                  "var userId = pm.environment.get(\"humanId\");",
+                  "",
+                  "if (!postId) console.warn(\"postId is not set. Run 'Create Post' first.\");",
+                  "if (!userId) console.warn(\"humanId is not set. Run 'Create User' first.\");"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "if (pm.response.code === 201 && pm.response.body && pm.response.body.commentId) {",
+                  "  console.log(\"Saving...\")",
+                  "  pm.environment.set(\"humanCommentId\", pm.response.body.commentId, { persist: true });",
+                  "  console.log(\"humanCommentId saved:\", pm.response.body.commentId);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "5_Guardrail_Edge_Cases",
+      "item": [
+        {
+          "name": "[Test] Blank Content Validation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/posts",
+              "protocol": "",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authorId\": \"{{humanId}}\",\n  \"content\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "var userId = pm.environment.get(\"humanId\");",
+                  "if (!userId) console.warn(\"humanId is not set. Run 'Create User' first.\");"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "if (pm.response.code === 400) {",
+                  "  console.log(\"Correctly returned 400 - @NotBlank validation triggered.\");",
+                  "} else {",
+                  "  console.warn(\"Unexpected status:\", pm.response.code);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[Test] Bot Comment on Bot-Authored Post (no cooldown)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/posts/{{botPostId}}/comments",
+              "protocol": "",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts",
+                "{{botPostId}}",
+                "comments"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authorId\": \"{{botId}}\",\n  \"content\": \"Dummy comment\",\n  \"parentCommentId\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  console.log(\"Confirmed: no cooldown applied on bot-to-bot interaction.\");",
+                  "} else if (pm.response.code === 429) {",
+                  "  console.warn(\"Got 429 - check that your botPostId belongs to a bot-authored post, not a human post.\");",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[Test] Duplicate Bot Name",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/bots",
+              "protocol": "",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "bots"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Bot01\",\n  \"personaDescription\": \"Dummy\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "console.log(\"NOTE: Run 'Create Bot' with name 'AlphaBot' first, then run this to trigger the 409.\");"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "if (pm.response.code === 409) {",
+                  "  console.log(\"Correctly returned 409:\", pm.response.body.message);",
+                  "} else {",
+                  "  console.warn(\"Unexpected status:\", pm.response.code);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[Test] Duplicate Username",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "protocol": "",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"john_doe\",\n  \"isPremium\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "console.log(\"NOTE: Run 'Create User' with username 'john_doe' first, then run this to trigger the 409.\");"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "if (pm.response.code === 409) {",
+                  "  console.log(\"Correctly returned 409:\", pm.response.body.message);",
+                  "} else {",
+                  "  console.warn(\"Unexpected status:\", pm.response.code);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[Test] Invalid Author UUID",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/posts",
+              "protocol": "",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"content\": \"Dummy comment\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "if (pm.response.code === 404) {",
+                  "  console.log(\"Correctly returned 404:\", pm.response.body.message);",
+                  "} else {",
+                  "  console.warn(\"Unexpected status:\", pm.response.code);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[Test] Like Post - Invalid Post UUID",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/posts/00000000-0000-0000-0000-000000000000/like?authorId={{humanId}}",
+              "protocol": "",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts",
+                "00000000-0000-0000-0000-000000000000",
+                "like?authorId={{humanId}}"
+              ],
+              "query": [
+                {
+                  "key": "authorId",
+                  "value": "{{humanId}}"
+                }
+              ],
+              "variable": []
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "var userId = pm.environment.get(\"humanId\");",
+                  "if (!userId) console.warn(\"userId is not set. Run 'Create User' first.\");"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "if (pm.response.code === 404) {",
+                  "  console.log(\"Correctly returned 404:\", pm.response.body.message);",
+                  "} else {",
+                  "  console.warn(\"Unexpected status:\", pm.response.code);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "[Test] Bot Commenting on Human Post (cooldown on 2nd attempt)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/posts/{{humanPostId}}/comments",
+              "protocol": "",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts",
+                "{{humanPostId}}",
+                "comments"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authorId\": \"{{botId}}\",\n  \"content\": \"Dummy comment\",\n  \"parentCommentId\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "botId",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "humanId",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "userId",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "botPostId",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "postId",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "humanPostId",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "humanCommentId",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "commentId",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}
