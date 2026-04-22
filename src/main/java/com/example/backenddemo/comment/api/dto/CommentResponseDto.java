@@ -9,6 +9,8 @@ public record CommentResponseDto (
         UUID commentId,
         UUID authorId,
         UUID postId,
-        String content
+        String content,
+        Integer depthLevel,
+        UUID parentCommentId
 ){
 }

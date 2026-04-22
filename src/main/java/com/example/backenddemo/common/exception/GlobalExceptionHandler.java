@@ -59,6 +59,14 @@ public class GlobalExceptionHandler {
                 .body(errorBody(ex.getMessage(), 409));
     }
 
+    @ExceptionHandler(DepthLimitExceededException.class)
+    public ResponseEntity<Map<String, Object>> handleDepthLimit(
+            DepthLimitExceededException ex) {
+        return ResponseEntity
+                .status(HttpStatus.TOO_MANY_REQUESTS)
+                .body(errorBody(ex.getMessage(), 429));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGeneric(Exception ex) {
         return ResponseEntity

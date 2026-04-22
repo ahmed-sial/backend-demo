@@ -18,7 +18,7 @@ public class NotificationService {
 
     public void sendNotification(UUID userId) {
         Boolean notification = redisTemplate.opsForValue()
-                .setIfAbsent(getRedisCooldownKey(userId), "true", 10, TimeUnit.MINUTES);
+                .setIfAbsent(getRedisCooldownKey(userId), "true", 15, TimeUnit.MINUTES);
 
         if (Boolean.TRUE.equals(notification)) {
             log.info("Push Notification Sent to User");

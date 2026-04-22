@@ -37,11 +37,29 @@ public class CommentService {
                 .orElseThrow(() -> new AuthorNotFoundException("Author not found"));
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new PostNotFoundException("Post not found"));
+        int depthLevel = 0;
+        Comment parentComment = null;
+
+        if (commentDto.parentCommentId() != null) {
+            parentComment = commentRepository
+                    .findById(commentDto.parentCommentId())
+                    .orElseThrow(() -> new RuntimeException("Parent comment not found"));
+
+            Integer parentDepth = redisService.getCommentDepth(parentComment.getId());
+            if (parentDepth == null) {
+                parentDepth = parentComment.getDepthLevel();
+            }
+            depthLevel = parentDepth + 1;
+        }
+
+        redisService.enforceDepthCap(depthLevel);
+
         var comment = Comment
                 .builder()
                 .post(post)
                 .author(author)
                 .content(commentDto.content())
+                .depthLevel(depthLevel)
                 .build();
 
         if (author instanceof Bot) {
@@ -49,6 +67,7 @@ public class CommentService {
             redisService.updateViralityByBot(postId);
         }
         var savedComment = commentRepository.save(comment);
+        redisService.setCommentDepth(savedComment.getId(), depthLevel);
         if (author instanceof Bot) {
             notificationService.sendNotification(post.getAuthor().getId());
         } else if (author instanceof User) {
@@ -56,6 +75,4 @@ public class CommentService {
         }
         return commentMapper.toDto(savedComment);
     }
-
-
 }

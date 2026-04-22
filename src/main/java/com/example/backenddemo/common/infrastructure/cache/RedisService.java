@@ -1,6 +1,7 @@
 package com.example.backenddemo.common.infrastructure.cache;
 
 import com.example.backenddemo.common.exception.BotReplyLimitExceededException;
+import com.example.backenddemo.common.exception.DepthLimitExceededException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,27 @@ public class RedisService {
         return Boolean.TRUE.equals(absent);
     }
 
+    public void setCommentDepth(UUID commentId, int depth) {
+        redisTemplate.opsForValue().set(
+                getRedisDepthKey(commentId),
+                depth,
+                7,
+                TimeUnit.DAYS
+        );
+    }
+
+    public Integer getCommentDepth(UUID commentId) {
+        var depth = redisTemplate.opsForValue().get(getRedisDepthKey(commentId));
+        if (depth == null) return null;
+        return Integer.parseInt(depth.toString());
+    }
+
+    public void enforceDepthCap(int depth) {
+        if (depth > 20) {
+           throw new DepthLimitExceededException("Comment thread depth limit exceeded");
+        }
+    }
+
     private void updateByPoints(UUID postId, int points) {
         redisTemplate.opsForValue().increment(getRedisId(postId), points);
     }
@@ -58,5 +80,8 @@ public class RedisService {
     }
     private String getRedisCooldownKey(UUID botId, UUID humanId) {
         return "cooldown:bot_" + botId.toString() + ":human_" + humanId.toString();
+    }
+    private String getRedisDepthKey(UUID commentId) {
+        return "comment:" + commentId.toString() + ":depth";
     }
 }

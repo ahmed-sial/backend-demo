@@ -13,6 +13,9 @@ public class CommentMapper {
                 .content(comment.getContent())
                 .authorId(comment.getAuthor().getId())
                 .postId(comment.getPost().getId())
+                .depthLevel(comment.getDepthLevel())
+                .parentCommentId(comment.getParentComment() != null
+                        ? comment.getParentComment().getId() : null)
                 .build();
     }
 }

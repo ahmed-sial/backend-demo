@@ -31,4 +31,8 @@ public class Comment extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
+
+    @ManyToOne
+    @JoinColumn(name = "parent_comment_id", nullable = false)
+    private Comment parentComment;
 }
