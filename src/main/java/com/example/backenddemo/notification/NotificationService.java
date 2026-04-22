@@ -17,20 +17,14 @@ public class NotificationService {
     private final RedisTemplate<String, String> redisTemplate;
 
     public void sendNotification(UUID userId) {
-        if (cooldownKeyExists(userId)) {
-            redisTemplate.opsForList().leftPush(getRedisListKey(userId), getNotificationContent());
-        } else {
+        Boolean notification = redisTemplate.opsForValue()
+                .setIfAbsent(getRedisCooldownKey(userId), "true", 10, TimeUnit.MINUTES);
+
+        if (Boolean.TRUE.equals(notification)) {
             log.info("Push Notification Sent to User");
-            setNotificationCooldown(userId);
+        } else {
+            redisTemplate.opsForList().leftPush(getRedisListKey(userId), getNotificationContent());
         }
-    }
-
-    private void setNotificationCooldown(UUID userId) {
-       redisTemplate.opsForValue().set(getRedisCooldownKey(userId), "true", 15, TimeUnit.MINUTES);
-    }
-
-    private boolean cooldownKeyExists(UUID userId) {
-        return redisTemplate.hasKey(getRedisCooldownKey(userId));
     }
 
     private String getNotificationContent() {

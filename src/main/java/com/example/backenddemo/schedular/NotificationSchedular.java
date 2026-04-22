@@ -22,26 +22,24 @@ public class NotificationSchedular {
     public void notificationSchedular() {
         List<String> keys = getAllUsersWithPendingRequests();
         for (String key : keys) {
-            var msg = getSummarizedMessageForUser(key);
-            log.info(msg);
+            getSummarizedMessageForUser(key);
         }
     }
 
-    private String getSummarizedMessageForUser(String userListKey) {
+    private void getSummarizedMessageForUser(String userListKey) {
        var msgCount = redisTemplate.opsForList().size(userListKey);
-       if (msgCount != null && msgCount > 0) {
-           // There was no use to pop all the messages as we know the size of whole list but for the sake of requirement.
-           var messages = redisTemplate.opsForList().leftPop(userListKey, msgCount);
-       }
+       if (msgCount == null || msgCount == 0) return;
+       // There was no use to pop all the messages as we know the size of whole list but for the sake of requirement.
+       redisTemplate.opsForList().leftPop(userListKey, msgCount);
        redisTemplate.delete(userListKey);
-       return "Summarized Push Notification: Bot X and " + msgCount + " others interacted with your posts.";
+        log.info("Summarized Push Notification: Bot X and {} others interacted with your posts.", msgCount);
     }
 
     private List<String> getAllUsersWithPendingRequests() {
         ScanOptions scanOptions = ScanOptions
                 .scanOptions()
                 .match("user:*:pending_notifs")
-                .count(100) // TODO
+                .count(50)
                 .build();
         List<String> keys = new ArrayList<>();
         try(Cursor<String> cursor = redisTemplate.scan(scanOptions)) {

@@ -11,7 +11,7 @@ public class Utils {
     public static void isInteractionValidForBot(Post post, Author author, RedisService redisService) {
         if (isPostByHuman(post) && isBotInteracting(author)) {
             boolean keyExists = redisService.acquireCooldown(author.getId(), post.getAuthor().getId());
-            if (keyExists) {
+            if (!keyExists) {
                 throw new BotInteractionsUnderCooldownPeriodException("Bot interactions(comment + like) under cooldown period");
             }
         }
