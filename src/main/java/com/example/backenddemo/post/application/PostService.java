@@ -7,11 +7,13 @@ import com.example.backenddemo.common.utils.Utils;
 import com.example.backenddemo.common.exception.AuthorNotFoundException;
 import com.example.backenddemo.common.exception.PostNotFoundException;
 import com.example.backenddemo.common.infrastructure.cache.RedisService;
+import com.example.backenddemo.notification.NotificationService;
 import com.example.backenddemo.post.api.dto.PostRequestDto;
 import com.example.backenddemo.post.api.dto.PostResponseDto;
 import com.example.backenddemo.post.domain.Post;
 import com.example.backenddemo.post.infrastructure.persistence.PostRepository;
 import com.example.backenddemo.user.domain.User;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +26,9 @@ public class PostService {
     private final AuthorRepository authorRepository;
     private final PostMapper postMapper;
     private final RedisService redisService;
+    private final NotificationService notificationService;
 
+    @Transactional
     public PostResponseDto create(PostRequestDto postDto) {
         Author author = authorRepository.findById(postDto.authorId())
                 .orElseThrow(() -> new AuthorNotFoundException("Author not found"));
@@ -38,23 +42,27 @@ public class PostService {
         var savedPost = postRepository.save(post);
         return postMapper.toDto(savedPost);
     }
+
+    @Transactional
     public PostResponseDto likePost(UUID authorId, UUID postId) {
         var author = authorRepository.findById(authorId)
                 .orElseThrow(() -> new AuthorNotFoundException("Author not found"));
         var post = postRepository.findById(postId)
                 .orElseThrow(() -> new PostNotFoundException("Post not found"));
 
-        Utils.isInteractionValidForBot(post, author, redisService);
-
         post.setLikes(post.getLikes() + 1);
-        postRepository.save(post);
-        if (author instanceof User) {
-            redisService.updateViralityByHumanLike(author.getId());
-        } else if (author instanceof Bot) {
-            redisService.updateViralityByBot(author.getId());
-            redisService.addCooldownKey(author.getId(), post.getAuthor().getId());
+
+        if (author instanceof Bot) {
+            Utils.isInteractionValidForBot(post, author, redisService);
+            redisService.updateViralityByBot(postId);
         }
-        return postMapper.toDto(post);
+        var savedPost = postRepository.save(post);
+        if (author instanceof Bot) {
+            notificationService.sendNotification(post.getAuthor().getId());
+        } else if (author instanceof User) {
+            redisService.updateViralityByHumanLike(postId);
+        }
+        return postMapper.toDto(savedPost);
     }
 
 }

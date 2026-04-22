@@ -10,10 +10,12 @@ import com.example.backenddemo.comment.infrastructure.persistence.CommentReposit
 import com.example.backenddemo.common.utils.Utils;
 import com.example.backenddemo.common.exception.AuthorNotFoundException;
 import com.example.backenddemo.common.exception.PostNotFoundException;
+import com.example.backenddemo.notification.NotificationService;
 import com.example.backenddemo.post.domain.Post;
 import com.example.backenddemo.common.infrastructure.cache.RedisService;
 import com.example.backenddemo.post.infrastructure.persistence.PostRepository;
 import com.example.backenddemo.user.domain.User;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,13 +29,14 @@ public class CommentService {
     private final AuthorRepository authorRepository;
     private final CommentMapper commentMapper;
     private final RedisService redisService;
+    private final NotificationService notificationService;
 
+    @Transactional
     public CommentResponseDto create(UUID postId, CommentRequestDto commentDto) {
         Author author = authorRepository.findById(commentDto.authorId())
                 .orElseThrow(() -> new AuthorNotFoundException("Author not found"));
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new PostNotFoundException("Post not found"));
-        Utils.isInteractionValidForBot(post, author, redisService);
         var comment = Comment
                 .builder()
                 .post(post)
@@ -41,12 +44,15 @@ public class CommentService {
                 .content(commentDto.content())
                 .build();
 
+        if (author instanceof Bot) {
+            Utils.isInteractionValidForBot(post, author, redisService);
+            redisService.updateViralityByBot(postId);
+        }
         var savedComment = commentRepository.save(comment);
-        if (author instanceof User) {
-            redisService.updateViralityByHumanComment(author.getId());
-        } else if (author instanceof Bot) {
-            redisService.updateViralityByBot(author.getId());
-            redisService.addCooldownKey(author.getId(), post.getAuthor().getId());
+        if (author instanceof Bot) {
+            notificationService.sendNotification(post.getAuthor().getId());
+        } else if (author instanceof User) {
+            redisService.updateViralityByHumanComment(postId);
         }
         return commentMapper.toDto(savedComment);
     }
